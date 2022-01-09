@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import ProfileModal from "./miscellaneous/ProfileModal";
-// import ScrollableChat from "./ScrollableChat";
+import ScrollableChat from "./ScrollableChat";
 // import Lottie from "react-lottie";
 // import animationData from "../animations/typing.json";
 
@@ -56,6 +56,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       );
       setMessages(data);
       setLoading(false);
+      console.log(data);
 
       // socket.emit("join chat", selectedChat._id);
     } catch (error) {
@@ -112,8 +113,13 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     // eslint-disable-next-line
   }, [selectedChat]);
 
+  const typingHandler = (e) => {
+    setNewMessage(e.target.value);
+  };
+
 
   return (
+    
     <>
       {selectedChat ? (
         <>
@@ -172,6 +178,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               />
             ) : (
               <div className="messages">
+                <ScrollableChat messages={messages} />
               </div>
             )}
 
@@ -192,6 +199,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 bg="#E0E0E0"
                 placeholder="Enter a message.."
                 value={newMessage}
+                onChange={typingHandler}
               />
             </FormControl>
           </Box>
